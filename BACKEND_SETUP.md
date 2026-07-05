@@ -6,7 +6,7 @@
 - **Frontend**: React + Vite (port 5174)
 - **Backend**: FastAPI (port 8000)
 - **Admin Panel**: Secure JSON editor for packages with password protection
-- **Persistence**: Package changes saved to `backend/packages.json`
+- **Persistence**: Package changes saved in SQLite via `backend/travel_agency.db`
 
 ## Quick Start
 
@@ -61,7 +61,7 @@ Also update `CORS allow_origins` if running on different URLs (line 15-16).
 3. Click **Admin** button
 4. Enter password (default: `nusuk-admin`)
 5. Edit package JSON and click **Save to backend**
-6. Changes persist to `backend/packages.json` and reload on all page refreshes
+6. Changes persist in the SQLite database and reload on all page refreshes
 
 ## API Endpoints
 
@@ -77,7 +77,7 @@ Also update `CORS allow_origins` if running on different URLs (line 15-16).
 luxury-travel-agency/
 ├── backend/
 │   ├── app.py                 # FastAPI app
-│   ├── packages.json          # Package data (auto-updated)
+│   ├── travel_agency.db       # SQLite database for package data
 │   └── requirements.txt       # Python dependencies
 ├── src/
 │   ├── components/
@@ -107,7 +107,7 @@ python -m uvicorn backend.app:app --port 8000
 ### Changes not saving
 - Verify admin password is correct
 - Check backend terminal for error messages
-- Ensure `backend/packages.json` is writable
+- Check that the backend can write to `backend/travel_agency.db`
 
 ## Deployment
 
