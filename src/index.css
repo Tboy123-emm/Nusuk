@@ -1,0 +1,344 @@
+/* CSS Design System for Al Maqam - Luxury Hajj & Umrah Experiences */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@100..900&family=Cinzel:wght@400..800&display=swap');
+
+:root {
+  /* Elegant Color Palette */
+  --white: #FFFFFF;
+  --cream: #FAF7F2;
+  --charcoal: #1A1A1A;
+  --charcoal-light: #2D2D2D;
+  --gold: #C9A227;
+  --gold-light: #DFBF57;
+  --gold-dark: #A5821A;
+  --gold-glow: rgba(201, 162, 39, 0.15);
+  
+  --text-primary: #1A1A1A;
+  --text-secondary: #5A5A5A;
+  --text-muted: #8E8D8A;
+  --text-white: #FFFFFF;
+  
+  --border-light: rgba(26, 26, 26, 0.08);
+  --border-gold: rgba(201, 162, 39, 0.25);
+  --border-dark: rgba(255, 255, 255, 0.1);
+  
+  /* Typography */
+  --font-serif: 'Playfair Display', 'Cinzel', serif;
+  --font-sans: 'Outfit', sans-serif;
+  
+  /* Layout & Animations */
+  --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-blur: blur(20px);
+}
+
+/* Reset & Core Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: var(--font-sans);
+  background-color: var(--white);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+a, button, .btn, .nav-link, .faq-item, .service-card, .gallery-item, .featured-plan-card, .route-card {
+  cursor: pointer;
+}
+
+input, textarea, [contenteditable="true"] {
+  cursor: text;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--charcoal);
+  border: 2px solid var(--cream);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* Text Selection */
+::selection {
+  background: var(--gold-glow);
+  color: var(--charcoal);
+}
+
+/* Spacious Container */
+.container {
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+/* Editorial Sections */
+section {
+  padding: 10rem 0;
+  position: relative;
+}
+
+.bg-cream {
+  background-color: var(--cream);
+}
+
+.bg-charcoal {
+  background-color: var(--charcoal);
+  color: var(--text-white);
+}
+
+/* Typographic Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.editorial-tag {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.section-title {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  margin-bottom: 2rem;
+  font-family: var(--font-serif);
+}
+
+.bg-charcoal .section-title {
+  color: var(--text-white);
+}
+
+.section-desc {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin-bottom: 5rem;
+}
+
+.bg-charcoal .section-desc {
+  color: var(--text-muted);
+}
+
+/* Buttons (Aman / Apple luxury style) */
+.btn {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 1.25rem 2.5rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0px; /* Sharp editorial cuts */
+  transition: var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--charcoal);
+  color: var(--white);
+  border: 1px solid var(--charcoal);
+}
+
+.btn-primary:hover {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: var(--charcoal);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--charcoal);
+  border: 1px solid var(--charcoal);
+}
+
+.btn-secondary:hover {
+  background-color: var(--charcoal);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* Charcoal Section Buttons */
+.bg-charcoal .btn-primary {
+  background-color: var(--white);
+  color: var(--charcoal);
+  border-color: var(--white);
+}
+
+.bg-charcoal .btn-primary:hover {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: var(--charcoal);
+}
+
+.bg-charcoal .btn-secondary {
+  color: var(--white);
+  border-color: var(--white);
+}
+
+.bg-charcoal .btn-secondary:hover {
+  background-color: var(--white);
+  color: var(--charcoal);
+}
+
+/* Split Column Layouts */
+.split-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6rem;
+  align-items: center;
+}
+
+/* Animated Elements & Parallax Fallbacks */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: elegantFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes elegantFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.form-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.bg-charcoal .form-label {
+  color: var(--white);
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.15);
+  padding: 1rem 0;
+  color: var(--charcoal);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 300;
+  transition: var(--transition-fast);
+}
+
+.bg-charcoal .form-input, .bg-charcoal .form-textarea {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+  color: var(--white);
+}
+
+.form-input:focus, .form-textarea:focus {
+  outline: none;
+  border-bottom-color: var(--gold);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Grids */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3.5rem;
+}
+
+.grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2.5rem;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1200px) {
+  .container {
+    padding: 0 2.5rem;
+  }
+  .split-layout {
+    gap: 4rem;
+  }
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+  .grid-5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 6rem 0;
+  }
+  .split-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .grid-2, .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .grid-5 {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    padding: 0 1.5rem;
+  }
+  .section-title {
+    font-size: 2.25rem;
+  }
+}

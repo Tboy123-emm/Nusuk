@@ -1,0 +1,134 @@
+[
+  {
+    "id": "safa-marwa-sanctuary",
+    "title": "The Safa & Marwa Sanctuary",
+    "subtitle": "Bespoke Umrah Experience",
+    "tag": "Umrah Sanctuary",
+    "duration": "12 Days",
+    "lodging": "Fairmont Makkah Clock Tower & Oberoi Madinah",
+    "desc": "A bespoke pilgrimage designed for profound spiritual contemplation. Enjoy premium private suites with immediate Kaaba access, business class transfers, and personal historical guides in the holy cities.",
+    "img": "/images/package_umrah.png",
+    "featured": false,
+    "plans": [
+      {
+        "name": "Standard",
+        "price": "Starting from N2,500,000",
+        "includes": [
+          "Air ticket",
+          "Visa Processing",
+          "Accommodation (Makkah and Madina) Ground Transportation",
+          "Madina Ziyara"
+        ]
+      },
+      {
+        "name": "Plus",
+        "price": "Starting from N3,500,000",
+        "includes": [
+          "Air ticket",
+          "Visa Processing",
+          "Three Star Accommodation (Makkah and Madina) Ground Transportation",
+          "Madina Ziyara"
+        ]
+      },
+      {
+        "name": "Premier",
+        "price": "Starting from N5,000,000",
+        "includes": [
+          "Air ticket (Not included)",
+          "Visa Processing",
+          "Four or Five Star Accommodation (Makkah and Madina) Ground Transportation",
+          "Madina Ziyara",
+          "Madina-Makkah (Train)"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "celestial-gateway-hajj",
+    "title": "The Celestial Gateway Hajj",
+    "subtitle": "Elite Hajj Pilgrimage",
+    "tag": "Exclusive Hajj",
+    "duration": "21 Days",
+    "lodging": "Raffles Makkah Palace & VIP Mina Tents",
+    "desc": "The ultimate sacred calling fulfilled with absolute luxury. Includes VIP fast-track visa processing, private GMC transport, air-conditioned Mina & Arafat pavilions with gourmet catering, and esteemed guidance scholars.",
+    "img": "/images/package_hajj.png",
+    "featured": false,
+    "plans": [
+      {
+        "name": "Standard",
+        "price": "Starting from N2,500,000",
+        "includes": [
+          "Air ticket",
+          "Visa Processing",
+          "Accommodation (Makkah and Madina) Ground Transportation",
+          "Madina Ziyara"
+        ]
+      },
+      {
+        "name": "Plus",
+        "price": "Starting from N3,500,000",
+        "includes": [
+          "Air ticket",
+          "Visa Processing",
+          "Three Star Accommodation (Makkah and Madina) Ground Transportation",
+          "Madina Ziyara"
+        ]
+      },
+      {
+        "name": "Premier",
+        "price": "Starting from N5,000,000",
+        "includes": [
+          "Air ticket (Not included)",
+          "Visa Processing",
+          "Four or Five Star Accommodation (Makkah and Madina) Ground Transportation",
+          "Madina Ziyara",
+          "Madina-Makkah (Train)"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "red-sea-stopover-retreat",
+    "title": "The Red Sea Stopover Retreat",
+    "subtitle": "Umrah & Coastal Escape",
+    "tag": "Umrah & Jeddah Stopover",
+    "duration": "14 Days",
+    "lodging": "Swissotel Makkah & Rosewood Jeddah",
+    "desc": "A harmonious two-week itinerary combining deep spiritual devotion in Makkah and Madinah with a premium, tranquil coastal retreat overlooking the Red Sea in Jeddah.",
+    "img": "https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=800&auto=format&fit=crop",
+    "featured": false,
+    "plans": [
+      {
+        "name": "Standard",
+        "price": "Starting from N2,500,000",
+        "includes": [
+          "Air ticket",
+          "Visa Processing",
+          "Accommodation (Makkah and Madina) Ground Transportation",
+          "Madina Ziyara"
+        ]
+      },
+      {
+        "name": "Plus",
+        "price": "Starting from N3,500,000",
+        "includes": [
+          "Air ticket",
+          "Visa Processing",
+          "Three Star Accommodation (Makkah and Madina) Ground Transportation",
+          "Madina Ziyara"
+        ]
+      },
+      {
+        "name": "Premier",
+        "price": "Starting from N5,000,000",
+        "includes": [
+          "Air ticket (Not included)",
+          "Visa Processing",
+          "Four or Five Star Accommodation (Makkah and Madina) Ground Transportation",
+          "Madina Ziyara",
+          "Madina-Makkah (Train)"
+        ]
+      }
+    ]
+  }
+]
