@@ -1,5 +1,6 @@
 import json
 import smtplib
+import sqlite3
 from pathlib import Path
 from typing import List, Optional
 from email.mime.text import MIMEText
@@ -15,6 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 BASE_DIR = Path(__file__).resolve().parent
+DB_FILE = BASE_DIR / 'travel_agency.db'
 PACKAGES_FILE = BASE_DIR / 'packages.json'
 ADMIN_PASSWORD = 'nusuk-admin'
 
@@ -74,20 +76,183 @@ class ContactFormData(BaseModel):
     message: str
 
 
-def read_packages() -> list:
+def init_db():
+    """Initialize SQLite database with schema"""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    
+    # Create packages table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS packages (
+            id TEXT PRIMARY KEY,
+            title TEXT NOT NULL,
+            subtitle TEXT,
+            tag TEXT,
+            duration TEXT,
+            lodging TEXT,
+            desc TEXT,
+            img TEXT,
+            featured BOOLEAN DEFAULT 0
+        )
+    ''')
+    
+    # Create plans table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS plans (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            package_id TEXT NOT NULL,
+            name TEXT NOT NULL,
+            price TEXT NOT NULL,
+            includes TEXT,
+            FOREIGN KEY (package_id) REFERENCES packages(id)
+        )
+    ''')
+    
+    conn.commit()
+    conn.close()
+
+
+def migrate_from_json():
+    """Migrate existing packages.json data to SQLite"""
     if not PACKAGES_FILE.exists():
-        return []
+        return
+    
     try:
         with open(PACKAGES_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            packages_data = json.load(f)
+        
+        conn = sqlite3.connect(DB_FILE)
+        cursor = conn.cursor()
+        
+        # Check if data already migrated
+        cursor.execute('SELECT COUNT(*) FROM packages')
+        if cursor.fetchone()[0] > 0:
+            conn.close()
+            return
+        
+        # Migrate data
+        for pkg in packages_data:
+            cursor.execute('''
+                INSERT OR IGNORE INTO packages 
+                (id, title, subtitle, tag, duration, lodging, desc, img, featured)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                pkg.get('id'),
+                pkg.get('title'),
+                pkg.get('subtitle'),
+                pkg.get('tag'),
+                pkg.get('duration'),
+                pkg.get('lodging'),
+                pkg.get('desc'),
+                pkg.get('img'),
+                pkg.get('featured', False)
+            ))
+            
+            # Insert plans
+            for plan in pkg.get('plans', []):
+                cursor.execute('''
+                    INSERT INTO plans (package_id, name, price, includes)
+                    VALUES (?, ?, ?, ?)
+                ''', (
+                    pkg.get('id'),
+                    plan.get('name'),
+                    plan.get('price'),
+                    json.dumps(plan.get('includes', []))
+                ))
+        
+        conn.commit()
+        conn.close()
+        print("✓ Migrated packages.json to SQLite database")
+    except Exception as e:
+        print(f"Error migrating data: {e}")
+
+
+def read_packages() -> list:
+    """Read all packages from database"""
+    try:
+        conn = sqlite3.connect(DB_FILE)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT * FROM packages ORDER BY id')
+        packages = []
+        
+        for row in cursor.fetchall():
+            pkg = dict(row)
+            
+            # Fetch plans for this package
+            cursor.execute('SELECT name, price, includes FROM plans WHERE package_id = ?', (pkg['id'],))
+            plans = []
+            for plan_row in cursor.fetchall():
+                plans.append({
+                    'name': plan_row[0],
+                    'price': plan_row[1],
+                    'includes': json.loads(plan_row[2]) if plan_row[2] else []
+                })
+            
+            pkg['plans'] = plans
+            packages.append(pkg)
+        
+        conn.close()
+        return packages
     except Exception as e:
         print(f"Error reading packages: {e}")
         return []
 
 
 def write_packages(packages: list) -> None:
-    with open(PACKAGES_FILE, 'w', encoding='utf-8') as f:
-        json.dump(packages, f, indent=2, ensure_ascii=False)
+    """Write packages to database, replacing all existing data"""
+    try:
+        conn = sqlite3.connect(DB_FILE)
+        cursor = conn.cursor()
+        
+        # Clear existing data
+        cursor.execute('DELETE FROM plans')
+        cursor.execute('DELETE FROM packages')
+        
+        # Insert new data
+        for pkg in packages:
+            cursor.execute('''
+                INSERT INTO packages 
+                (id, title, subtitle, tag, duration, lodging, desc, img, featured)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                pkg.get('id'),
+                pkg.get('title'),
+                pkg.get('subtitle'),
+                pkg.get('tag'),
+                pkg.get('duration'),
+                pkg.get('lodging'),
+                pkg.get('desc'),
+                pkg.get('img'),
+                pkg.get('featured', False)
+            ))
+            
+            # Insert plans
+            for plan in pkg.get('plans', []):
+                cursor.execute('''
+                    INSERT INTO plans (package_id, name, price, includes)
+                    VALUES (?, ?, ?, ?)
+                ''', (
+                    pkg.get('id'),
+                    plan.get('name'),
+                    plan.get('price'),
+                    json.dumps(plan.get('includes', []))
+                ))
+        
+        conn.commit()
+        conn.close()
+        print("✓ Packages updated in database")
+    except Exception as e:
+        print(f"Error writing packages: {e}")
+
+
+
+@app.on_event("startup")
+def startup_event():
+    """Initialize database on startup"""
+    init_db()
+    migrate_from_json()
 
 
 @app.get('/packages')
