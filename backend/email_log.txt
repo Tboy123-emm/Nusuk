@@ -2,3 +2,10 @@
 [SUCCESS] Email sent from alamuoyetoluwani@gmail.com to alamuoyetoluwani@gmail.com
 [SUCCESS] Email sent from alamuoyetoluwani@gmail.com to alamuoyetoluwani@gmail.com
 [SUCCESS] Email sent from alamuoyeayotomiwa@gmail.com to reservation.nusuktours@gmail.com
+[ERROR] Failed to send email from alamuoyeayotomiwa@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+[ERROR] Failed to send email from alamuoyeayotomiwa@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+[ERROR] Failed to send email from alamuoyeayotomiwa@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+[ERROR] Failed to send email from alamuoyeayotomiwa@gmail.com: timed out
+[ERROR] Failed to send email from alamuoyeayotomiwa@gmail.com: timed out
+[SUCCESS] Email sent from alamuoyeayotomiwa@gmail.com to reservation.nusuktours@gmail.com
+[SUCCESS] Email sent from alamuoyeayotomiwa@gmail.com to reservation.nusuktours@gmail.com

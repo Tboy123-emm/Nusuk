@@ -8,17 +8,20 @@ from email.mime.multipart import MIMEMultipart
 from os import getenv
 from dotenv import load_dotenv
 
-# Load environment variables from .env
-load_dotenv()
-
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 BASE_DIR = Path(__file__).resolve().parent
+PROJECT_DIR = BASE_DIR.parent
 DB_FILE = BASE_DIR / 'travel_agency.db'
 PACKAGES_FILE = BASE_DIR / 'packages.json'
+LOG_FILE = BASE_DIR / 'email_log.txt'
 ADMIN_PASSWORD = 'nusuk-admin'
+
+# Load environment variables from stable locations regardless of where uvicorn is started.
+load_dotenv(PROJECT_DIR / '.env')
+load_dotenv(BASE_DIR / '.env', override=True)
 
 
 def get_allowed_origins() -> list[str]:
@@ -293,7 +296,7 @@ def send_contact_email(contact_data: ContactFormData) -> bool:
 
     if not sender_email or not sender_password:
         print("Warning: SMTP credentials not configured")
-        with open('email_log.txt', 'a') as log:
+        with open(LOG_FILE, 'a') as log:
             log.write(f"[ERROR] SMTP credentials not configured\n")
         return False
 
@@ -323,19 +326,19 @@ This message was sent through the Nusuk Tours website contact form.
         msg.attach(MIMEText(body, 'plain'))
 
         # Send email
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
+        with smtplib.SMTP(smtp_server, smtp_port, timeout=15) as server:
             server.starttls()
             server.login(sender_email, sender_password)
             server.send_message(msg)
 
         print(f"✓ Email sent successfully to {recipient_email} from {contact_data.email}")
-        with open('email_log.txt', 'a') as log:
+        with open(LOG_FILE, 'a') as log:
             log.write(f"[SUCCESS] Email sent from {contact_data.email} to {recipient_email}\n")
         return True
 
     except Exception as e:
         print(f"✗ Failed to send SMTP email: {str(e)}")
-        with open('email_log.txt', 'a') as log:
+        with open(LOG_FILE, 'a') as log:
             log.write(f"[ERROR] Failed to send email from {contact_data.email}: {str(e)}\n")
         return False
 
@@ -353,6 +356,8 @@ async def send_contact(contact_data: ContactFormData):
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail='Email service temporarily unavailable'
             )
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
