@@ -1,3 +1,4 @@
 fastapi==0.104.1
 uvicorn[standard]==0.22.0
+gunicorn==21.2.2
 python-dotenv==1.0.0

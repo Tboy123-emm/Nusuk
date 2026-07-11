@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Send, PhoneCall, Mail, MapPin } from 'lucide-react';
+import { getPackagesApiUrl } from '../data/packageStorage';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ export default function ContactForm() {
 
     try {
       // Try SMTP backend first
-      const smtpResponse = await fetch('http://localhost:8000/contact', {
+      const smtpResponse = await fetch(getPackagesApiUrl('/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
