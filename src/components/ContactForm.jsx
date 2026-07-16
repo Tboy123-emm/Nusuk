@@ -26,12 +26,41 @@ export default function ContactForm() {
     setFallbackLink('');
     setIsSubmitting(true);
 
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
     try {
-      // Try SMTP backend first
+      if (serviceId && templateId && publicKey && window.emailjs && typeof window.emailjs.send === 'function') {
+        window.emailjs.init(publicKey);
+        const templateParams = {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone,
+          journey_type: formData.journeyType,
+          message: formData.message,
+        };
+
+        const result = await window.emailjs.send(serviceId, templateId, templateParams, { publicKey });
+        if (result.status === 200) {
+          setSubmitted(true);
+          setFormData({ name: '', email: '', phone: '', journeyType: 'umrah', message: '' });
+          setTimeout(() => {
+            setSubmitted(false);
+          }, 4000);
+          setIsSubmitting(false);
+          return;
+        }
+      }
+    } catch (emailError) {
+      console.warn('EmailJS unavailable or failed, trying backend fallback...', emailError);
+    }
+
+    try {
       const smtpResponse = await fetch(getPackagesApiUrl('/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (smtpResponse.ok) {
@@ -43,57 +72,14 @@ export default function ContactForm() {
         setIsSubmitting(false);
         return;
       }
+
+      const errorPayload = await smtpResponse.json().catch(() => ({}));
+      throw new Error(errorPayload?.detail || `Request failed with ${smtpResponse.status}`);
     } catch (smtpError) {
-      console.warn('SMTP backend unavailable, trying EmailJS...', smtpError);
-    }
-
-    // Fallback to EmailJS if SMTP fails
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      setSubmitError('Email service is not configured. Please try again later.');
-      setFallbackLink(buildMailtoLink(formData));
-      setIsSubmitting(false);
-      return;
-    }
-
-    const templateParams = {
-      from_name: formData.name,
-      from_email: formData.email,
-      phone: formData.phone,
-      journey_type: formData.journeyType,
-      message: formData.message,
-    };
-
-    if (!window.emailjs || typeof window.emailjs.send !== 'function') {
-      setSubmitError('EmailJS SDK is unavailable. Please try again later.');
-      setFallbackLink(buildMailtoLink(formData));
-      setIsSubmitting(false);
-      return;
-    }
-    window.emailjs.init(publicKey);
-
-    try {
-      const result = await window.emailjs.send(serviceId, templateId, templateParams, {
-        publicKey,
-      });
-
-      if (result.status === 200) {
-        setSubmitted(true);
-        setFormData({ name: '', email: '', phone: '', journeyType: 'umrah', message: '' });
-        setTimeout(() => {
-          setSubmitted(false);
-        }, 4000);
-      } else {
-        throw new Error(`EmailJS returned unexpected status: ${result.status}`);
-      }
-    } catch (error) {
-      const msg = error?.message ? `EmailJS error: ${error.message}` : 'Unable to send your inquiry.';
+      const msg = smtpError?.message ? smtpError.message : 'Unable to send your inquiry.';
       setSubmitError(`${msg} Use the button below to email ${contactEmail} directly.`);
       setFallbackLink(buildMailtoLink(formData));
-      console.error('Contact form submit error:', error);
+      console.error('Contact form submit error:', smtpError);
     } finally {
       setIsSubmitting(false);
     }

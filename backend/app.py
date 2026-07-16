@@ -352,10 +352,12 @@ async def send_contact(contact_data: ContactFormData):
         if success:
             return {'status': 'ok', 'message': 'Contact form sent successfully'}
 
-        return {
-            'status': 'queued',
-            'message': 'Contact form received. Email delivery is currently unavailable; please contact the advisor directly at reservation.nusuktours@gmail.com.'
-        }
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail='Email service temporarily unavailable. Please contact the advisor directly at reservation.nusuktours@gmail.com.'
+        )
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
