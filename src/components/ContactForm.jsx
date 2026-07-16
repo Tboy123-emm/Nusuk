@@ -74,7 +74,10 @@ export default function ContactForm() {
       }
 
       const errorPayload = await smtpResponse.json().catch(() => ({}));
-      throw new Error(errorPayload?.detail || `Request failed with ${smtpResponse.status}`);
+      const detail = errorPayload?.detail || `Request failed with ${smtpResponse.status}`;
+      setSubmitError(`${detail} Use the button below to email ${contactEmail} directly.`);
+      setFallbackLink(buildMailtoLink(formData));
+      console.error('Contact form submit error:', detail);
     } catch (smtpError) {
       const msg = smtpError?.message ? smtpError.message : 'Unable to send your inquiry.';
       setSubmitError(`${msg} Use the button below to email ${contactEmail} directly.`);
