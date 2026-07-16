@@ -6,6 +6,7 @@ from typing import List, Optional
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from os import getenv
+from urllib import request, error as urllib_error
 from dotenv import load_dotenv
 
 from fastapi import FastAPI, HTTPException, status
@@ -286,13 +287,73 @@ async def reset_packages(payload: dict):
     return {'status': 'ok', 'message': 'Packages reset'}
 
 
+def build_contact_email_body(contact_data: ContactFormData) -> str:
+    return f"""
+New Contact Form Submission:
+
+Name: {contact_data.name}
+Email: {contact_data.email}
+Phone: {contact_data.phone}
+Journey Type: {contact_data.journeyType}
+
+Message:
+{contact_data.message}
+
+---
+This message was sent through the Nusuk Tours website contact form.
+    """.strip()
+
+
+def send_contact_email_via_resend(contact_data: ContactFormData, recipient_email: str) -> bool:
+    """Send contact form email via Resend API"""
+    api_key = getenv('RESEND_API_KEY')
+    from_email = getenv('RESEND_FROM_EMAIL', '').strip()
+
+    if not api_key or not from_email:
+        return False
+
+    payload = {
+        'from': from_email,
+        'to': [recipient_email],
+        'subject': 'New Advisor Inquiry - Nusuk Tours',
+        'text': build_contact_email_body(contact_data),
+    }
+
+    req = request.Request(
+        'https://api.resend.com/emails',
+        headers={
+            'Authorization': f'Bearer {api_key}',
+            'Content-Type': 'application/json',
+        },
+        data=json.dumps(payload).encode('utf-8'),
+        method='POST',
+    )
+
+    try:
+        with request.urlopen(req, timeout=20) as response:
+            if response.status in (200, 201):
+                print(f"✓ Email sent successfully to {recipient_email} from {contact_data.email} via Resend")
+                with open(LOG_FILE, 'a') as log:
+                    log.write(f"[SUCCESS] Email sent from {contact_data.email} to {recipient_email} via Resend\n")
+                return True
+    except Exception as e:
+        print(f"✗ Failed to send Resend email: {str(e)}")
+        with open(LOG_FILE, 'a') as log:
+            log.write(f"[ERROR] Failed to send email from {contact_data.email} via Resend: {str(e)}\n")
+        return False
+
+
 def send_contact_email(contact_data: ContactFormData) -> bool:
-    """Send contact form email via SMTP"""
+    """Send contact form email via the best available transport"""
+    recipient_email = getenv('RECIPIENT_EMAIL', 'reservation.nusuktours@gmail.com').strip()
+
+    if send_contact_email_via_resend(contact_data, recipient_email):
+        return True
+
     smtp_server = getenv('SMTP_SERVER', 'smtp.gmail.com')
     smtp_port = int(getenv('SMTP_PORT', '587'))
     sender_email = getenv('SMTP_EMAIL')
     sender_password = getenv('SMTP_PASSWORD')
-    recipient_email = getenv('RECIPIENT_EMAIL', 'reservation.nusuktours@gmail.com').strip()
 
     if not sender_email or not sender_password:
         print("Warning: SMTP credentials not configured")
@@ -307,23 +368,7 @@ def send_contact_email(contact_data: ContactFormData) -> bool:
         msg['To'] = recipient_email
         msg['Subject'] = 'New Advisor Inquiry - Nusuk Tours'
 
-        # Email body
-        body = f"""
-New Contact Form Submission:
-
-Name: {contact_data.name}
-Email: {contact_data.email}
-Phone: {contact_data.phone}
-Journey Type: {contact_data.journeyType}
-
-Message:
-{contact_data.message}
-
----
-This message was sent through the Nusuk Tours website contact form.
-        """
-
-        msg.attach(MIMEText(body, 'plain'))
+        msg.attach(MIMEText(build_contact_email_body(contact_data), 'plain'))
 
         # Send email
         with smtplib.SMTP(smtp_server, smtp_port, timeout=15) as server:
