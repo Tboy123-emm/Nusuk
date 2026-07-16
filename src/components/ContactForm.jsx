@@ -31,9 +31,9 @@ export default function ContactForm() {
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-    if (typeof window !== 'undefined' && window.location) {
+    if (typeof window !== 'undefined') {
       try {
-        window.location.href = mailtoLink;
+        window.open(mailtoLink, '_blank', 'noopener,noreferrer');
       } catch (mailError) {
         console.warn('Unable to open the mail client directly.', mailError);
       }
