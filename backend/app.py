@@ -312,6 +312,9 @@ def send_contact_email_via_resend(contact_data: ContactFormData, recipient_email
     if not api_key or not from_email:
         return False
 
+    if '@' not in from_email:
+        from_email = f'contact@{from_email}'
+
     payload = {
         'from': from_email,
         'to': [recipient_email],
@@ -336,6 +339,12 @@ def send_contact_email_via_resend(contact_data: ContactFormData, recipient_email
                 with open(LOG_FILE, 'a') as log:
                     log.write(f"[SUCCESS] Email sent from {contact_data.email} to {recipient_email} via Resend\n")
                 return True
+    except urllib_error.HTTPError as e:
+        error_body = e.read().decode('utf-8', errors='ignore')
+        print(f"✗ Failed to send Resend email: {e.code} {e.reason} :: {error_body}")
+        with open(LOG_FILE, 'a') as log:
+            log.write(f"[ERROR] Failed to send email from {contact_data.email} via Resend: {e.code} {e.reason} :: {error_body}\n")
+        return False
     except Exception as e:
         print(f"✗ Failed to send Resend email: {str(e)}")
         with open(LOG_FILE, 'a') as log:
