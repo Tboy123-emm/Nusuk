@@ -82,23 +82,30 @@ export function getPlanForTier(packages = defaultPackages, tierName = '') {
   return plans[fallbackIndexes[normalizedTierName]] || null;
 }
 
-export function getApiBaseUrl() {
-  const env = typeof import.meta !== 'undefined' ? import.meta.env : undefined;
+export function getApiBaseUrl(env = (typeof import.meta !== 'undefined' ? import.meta.env : undefined)) {
   const configuredBaseUrl = env?.VITE_API_URL || env?.VITE_API_BASE_URL;
+  const hostname = typeof window !== 'undefined' && window.location ? window.location.hostname : '';
+  const isLocalhost = ['localhost', '127.0.0.1', '[::1]'].includes(hostname) || hostname.endsWith('.local');
 
   if (configuredBaseUrl) {
-    return configuredBaseUrl.replace(/\/$/, '');
-  }
-
-  if (typeof window !== 'undefined' && window.location) {
-    const { protocol, hostname } = window.location;
-    const isLocalhost = ['localhost', '127.0.0.1', '[::1]'].includes(hostname) || hostname.endsWith('.local');
-    if (isLocalhost) {
-      return `${protocol}//localhost:8000`;
+    const normalizedValue = configuredBaseUrl.trim();
+    if (normalizedValue === 'http://localhost:8000' || normalizedValue === 'http://127.0.0.1:8000') {
+      return isLocalhost ? normalizedValue.replace(/\/$/, '') : '/api';
     }
+
+    if (normalizedValue === '/api') {
+      return '/api';
+    }
+
+    return normalizedValue.replace(/\/$/, '');
   }
 
-  return '';
+  if (isLocalhost) {
+    const protocol = typeof window !== 'undefined' && window.location?.protocol ? window.location.protocol : 'http:';
+    return `${protocol}//localhost:8000`;
+  }
+
+  return '/api';
 }
 
 export function getPackagesApiUrl(path = '/packages') {

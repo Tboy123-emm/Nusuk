@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { defaultPackages } from './packageData.js';
-import { getPlanForTier, loadPackagesFromStorage, resolvePackagesForDisplay, savePackagesToStorage } from './packageStorage.js';
+import { getApiBaseUrl, getPlanForTier, loadPackagesFromStorage, resolvePackagesForDisplay, savePackagesToStorage } from './packageStorage.js';
 
 class MemoryStorage {
   constructor() {
@@ -56,4 +56,16 @@ test('maps the Premium tier to the Premier plan includes', () => {
     'Private scholar-led historical guidance',
     'Concierge support throughout the journey',
   ]);
+});
+
+test('uses a production API path on deployed sites', () => {
+  globalThis.window = { location: { hostname: 'nusuktours.com.ng' } };
+
+  assert.equal(getApiBaseUrl({}), '/api');
+});
+
+test('keeps localhost for local development', () => {
+  globalThis.window = { location: { hostname: 'localhost' } };
+
+  assert.equal(getApiBaseUrl({}), 'http://localhost:8000');
 });
