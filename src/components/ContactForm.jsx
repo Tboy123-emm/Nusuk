@@ -26,9 +26,26 @@ export default function ContactForm() {
     setFallbackLink('');
     setIsSubmitting(true);
 
+    const mailtoLink = buildMailtoLink(formData);
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (typeof window !== 'undefined' && window.location) {
+      try {
+        window.location.href = mailtoLink;
+      } catch (mailError) {
+        console.warn('Unable to open the mail client directly.', mailError);
+      }
+    }
+
+    setFallbackLink(mailtoLink);
+    setSubmitError(`Your email app should open with ${contactEmail} as the recipient. If it does not, use the button below.`);
+    setSubmitted(true);
+    setFormData({ name: '', email: '', phone: '', journeyType: 'umrah', message: '' });
+    setTimeout(() => {
+      setSubmitted(false);
+    }, 4000);
 
     try {
       if (serviceId && templateId && publicKey && window.emailjs && typeof window.emailjs.send === 'function') {
@@ -41,48 +58,20 @@ export default function ContactForm() {
           message: formData.message,
         };
 
-        const result = await window.emailjs.send(serviceId, templateId, templateParams, { publicKey });
-        if (result.status === 200) {
-          setSubmitted(true);
-          setFormData({ name: '', email: '', phone: '', journeyType: 'umrah', message: '' });
-          setTimeout(() => {
-            setSubmitted(false);
-          }, 4000);
-          setIsSubmitting(false);
-          return;
-        }
+        await window.emailjs.send(serviceId, templateId, templateParams, { publicKey });
       }
     } catch (emailError) {
-      console.warn('EmailJS unavailable or failed, trying backend fallback...', emailError);
+      console.warn('EmailJS unavailable or failed; mailto fallback will be used instead.', emailError);
     }
 
     try {
-      const smtpResponse = await fetch(getPackagesApiUrl('/contact'), {
+      await fetch(getPackagesApiUrl('/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-
-      if (smtpResponse.ok) {
-        setSubmitted(true);
-        setFormData({ name: '', email: '', phone: '', journeyType: 'umrah', message: '' });
-        setTimeout(() => {
-          setSubmitted(false);
-        }, 4000);
-        setIsSubmitting(false);
-        return;
-      }
-
-      const errorPayload = await smtpResponse.json().catch(() => ({}));
-      const detail = errorPayload?.detail || `Request failed with ${smtpResponse.status}`;
-      setSubmitError(`${detail} Use the button below to email ${contactEmail} directly.`);
-      setFallbackLink(buildMailtoLink(formData));
-      console.error('Contact form submit error:', detail);
     } catch (smtpError) {
-      const msg = smtpError?.message ? smtpError.message : 'Unable to send your inquiry.';
-      setSubmitError(`${msg} Use the button below to email ${contactEmail} directly.`);
-      setFallbackLink(buildMailtoLink(formData));
-      console.error('Contact form submit error:', smtpError);
+      console.warn('Backend contact endpoint unavailable.', smtpError);
     } finally {
       setIsSubmitting(false);
     }
