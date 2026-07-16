@@ -292,7 +292,7 @@ def send_contact_email(contact_data: ContactFormData) -> bool:
     smtp_port = int(getenv('SMTP_PORT', '587'))
     sender_email = getenv('SMTP_EMAIL')
     sender_password = getenv('SMTP_PASSWORD')
-    recipient_email = getenv('RECIPIENT_EMAIL', 'alamuoyetoluwani@gmail.com')
+    recipient_email = getenv('RECIPIENT_EMAIL', 'reservation.nusuktours@gmail.com').strip()
 
     if not sender_email or not sender_password:
         print("Warning: SMTP credentials not configured")

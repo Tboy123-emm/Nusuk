@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Send, PhoneCall, Mail, MapPin } from 'lucide-react';
 import { getPackagesApiUrl } from '../data/packageStorage';
+import { createMailtoLink, getContactEmail } from '../utils/contactEmail';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -15,13 +16,9 @@ export default function ContactForm() {
   const [submitError, setSubmitError] = useState('');
   const [fallbackLink, setFallbackLink] = useState('');
 
-  const createMailtoLink = (data) => {
-    const subject = encodeURIComponent('Private Advisor Inquiry');
-    const body = encodeURIComponent(
-      `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nJourney Type: ${data.journeyType}\n\nMessage:\n${data.message}`
-    );
-    return `mailto:alamuoyetoluwani@gmail.com?subject=${subject}&body=${body}`;
-  };
+  const contactEmail = getContactEmail(import.meta.env);
+
+  const buildMailtoLink = (data) => createMailtoLink(data, import.meta.env);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,7 +54,7 @@ export default function ContactForm() {
 
     if (!serviceId || !templateId || !publicKey) {
       setSubmitError('Email service is not configured. Please try again later.');
-      setFallbackLink(createMailtoLink(formData));
+      setFallbackLink(buildMailtoLink(formData));
       setIsSubmitting(false);
       return;
     }
@@ -72,7 +69,7 @@ export default function ContactForm() {
 
     if (!window.emailjs || typeof window.emailjs.send !== 'function') {
       setSubmitError('EmailJS SDK is unavailable. Please try again later.');
-      setFallbackLink(createMailtoLink(formData));
+      setFallbackLink(buildMailtoLink(formData));
       setIsSubmitting(false);
       return;
     }
@@ -94,8 +91,8 @@ export default function ContactForm() {
       }
     } catch (error) {
       const msg = error?.message ? `EmailJS error: ${error.message}` : 'Unable to send your inquiry.';
-      setSubmitError(`${msg} Use the button below to email advisors@nusuk-tours.com directly.`);
-      setFallbackLink(createMailtoLink(formData));
+      setSubmitError(`${msg} Use the button below to email ${contactEmail} directly.`);
+      setFallbackLink(buildMailtoLink(formData));
       console.error('Contact form submit error:', error);
     } finally {
       setIsSubmitting(false);
@@ -156,7 +153,7 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <span style={{ display: 'block', fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Inquiries Portal</span>
-                  <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', color: 'var(--white)' }}>reservation.nusuktours@gmail.com</span>
+                  <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', color: 'var(--white)' }}>{contactEmail}</span>
                 </div>
               </div>
             </div>
