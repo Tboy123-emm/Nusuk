@@ -327,6 +327,7 @@ def send_contact_email_via_resend(contact_data: ContactFormData, recipient_email
         headers={
             'Authorization': f'Bearer {api_key}',
             'Content-Type': 'application/json',
+            'User-Agent': 'nusuk-tours-backend/1.0',
         },
         data=json.dumps(payload).encode('utf-8'),
         method='POST',
