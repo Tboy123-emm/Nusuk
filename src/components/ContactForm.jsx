@@ -31,16 +31,8 @@ export default function ContactForm() {
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-    if (typeof window !== 'undefined') {
-      try {
-        window.open(mailtoLink, '_blank', 'noopener,noreferrer');
-      } catch (mailError) {
-        console.warn('Unable to open the mail client directly.', mailError);
-      }
-    }
-
     setFallbackLink(mailtoLink);
-    setSubmitError(`Your email app should open with ${contactEmail} as the recipient. If it does not, use the button below.`);
+    setSubmitError(`Your inquiry details are ready for ${contactEmail}. Use the email button below if you want to send them from your email app.`);
     setSubmitted(true);
     setFormData({ name: '', email: '', phone: '', journeyType: 'umrah', message: '' });
     setTimeout(() => {
@@ -160,6 +152,27 @@ export default function ContactForm() {
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.7', fontWeight: '300' }}>
                   Our private advisor has received your request. We will review your requirements and reach out to you within 24 hours to begin mapping your sacred sanctuary path.
                 </p>
+                {submitError && (
+                  <p style={{ color: 'var(--text-muted)', marginTop: '1.25rem', fontSize: '0.9rem', lineHeight: 1.5 }}>
+                    {submitError}
+                  </p>
+                )}
+                {fallbackLink && (
+                  <a
+                    href={fallbackLink}
+                    className="btn btn-secondary"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginTop: '1.25rem',
+                      width: '100%',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Open Email Client
+                  </a>
+                )}
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
