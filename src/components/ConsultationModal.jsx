@@ -28,7 +28,7 @@ export default function ConsultationModal({ isOpen, onClose, prefilledPackage })
 
     // Build a message that includes all consultation details
     const packageInfo = prefilledPackage
-      ? `Package: ${prefilledPackage.title}${prefilledPackage.selectedPlan ? ` (${prefilledPackage.selectedPlan.name} - ₦${prefilledPackage.selectedPlan.price})` : ''}`
+      ? `Package: ${prefilledPackage.title}${prefilledPackage.selectedPlan ? ` (${prefilledPackage.selectedPlan.name})` : ''}`
       : 'No specific package selected';
 
     const consultationMessage = `Consultation Request:
