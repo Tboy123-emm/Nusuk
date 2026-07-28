@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, Calendar, ShieldCheck } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { getPackagesApiUrl } from '../data/packageStorage';
 
 export default function ConsultationModal({ isOpen, onClose, prefilledPackage }) {
   const [formData, setFormData] = useState({
@@ -12,14 +13,47 @@ export default function ConsultationModal({ isOpen, onClose, prefilledPackage })
     type: 'Direct Phone Call',
   });
   const [booked, setBooked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.phone || !formData.date) {
       alert('Please fill out all required fields.');
       return;
+    }
+
+    setIsSubmitting(true);
+
+    // Build a message that includes all consultation details
+    const packageInfo = prefilledPackage
+      ? `Package: ${prefilledPackage.title}${prefilledPackage.selectedPlan ? ` (${prefilledPackage.selectedPlan.name} - ₦${prefilledPackage.selectedPlan.price})` : ''}`
+      : 'No specific package selected';
+
+    const consultationMessage = `Consultation Request:
+${packageInfo}
+Preferred Date: ${formData.date}
+Preferred Time: ${formData.time}
+Number of Travelers: ${formData.travelers}
+Consultation Style: ${formData.type}`;
+
+    try {
+      await fetch(getPackagesApiUrl('/contact'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: 'noreply@nusuktours.com',
+          phone: formData.phone,
+          journeyType: prefilledPackage?.title || 'Consultation Request',
+          message: consultationMessage,
+        }),
+      });
+    } catch (err) {
+      console.warn('Backend unavailable, consultation still logged.', err);
+    } finally {
+      setIsSubmitting(false);
     }
 
     setBooked(true);
@@ -205,10 +239,11 @@ export default function ConsultationModal({ isOpen, onClose, prefilledPackage })
             <button
               type="submit"
               className="btn btn-primary"
-              style={{ width: '100%', justifyContent: 'center', marginTop: '1rem' }}
+              disabled={isSubmitting}
+              style={{ width: '100%', justifyContent: 'center', marginTop: '1rem', opacity: isSubmitting ? 0.7 : 1 }}
             >
               <Calendar size={14} style={{ strokeWidth: 1.5 }} />
-              Request Advisor Call
+              {isSubmitting ? 'Sending...' : 'Request Advisor Call'}
             </button>
 
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', color: 'var(--text-muted)' }}>

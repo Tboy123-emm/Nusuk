@@ -113,7 +113,7 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <span style={{ display: 'block', fontSize: '0.65rem', letterSpacing: '0.1em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Direct Advisors</span>
-                  <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', color: 'var(--white)' }}>09070261007</span>
+                  <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', color: 'var(--white)' }}>08033699222</span>
                 </div>
               </div>
 

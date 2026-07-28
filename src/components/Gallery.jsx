@@ -29,6 +29,30 @@ export default function Gallery() {
       img: 'https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=800&auto=format&fit=crop',
       gridClass: 'masonry-small',
     },
+    {
+      id: 4,
+      title: 'Doha, Qatar',
+      tag: 'Gulf Splendour',
+      desc: 'A city where ancient heritage meets futuristic skyline. Explore the stunning Corniche, Museum of Islamic Art, and world-class hospitality.',
+      img: 'https://images.unsplash.com/photo-1590059913759-5460bd4b7049?q=80&w=800&auto=format&fit=crop',
+      gridClass: 'masonry-small',
+    },
+    {
+      id: 5,
+      title: 'Dubai, UAE',
+      tag: 'Luxury Capital',
+      desc: 'The pinnacle of modern luxury. From the Burj Khalifa to desert safaris, Dubai offers an unmatched blend of opulence and adventure.',
+      img: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop',
+      gridClass: 'masonry-medium',
+    },
+    {
+      id: 6,
+      title: 'Cairo, Egypt',
+      tag: 'Ancient Wonders',
+      desc: 'Walk in the footsteps of prophets and pharaohs. The Great Pyramids of Giza, Al-Azhar Mosque, and the timeless Nile await your arrival.',
+      img: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=800&auto=format&fit=crop',
+      gridClass: 'masonry-small',
+    },
   ];
 
   return (
@@ -299,7 +323,7 @@ export default function Gallery() {
         }
 
         .masonry-small {
-          grid-column: span 2;
+          grid-column: span 1;
           grid-row: span 1;
         }
 
@@ -308,18 +332,24 @@ export default function Gallery() {
             grid-template-columns: repeat(2, 1fr);
             grid-auto-rows: 280px;
           }
-          .masonry-large, .masonry-medium, .masonry-small {
+          .masonry-large {
             grid-column: span 2;
+            grid-row: span 2;
+          }
+          .masonry-medium, .masonry-small {
+            grid-column: span 1;
+            grid-row: span 1;
           }
         }
 
         @media (max-width: 640px) {
           .masonry-grid {
             grid-template-columns: 1fr;
-            grid-auto-rows: 320px;
+            grid-auto-rows: 280px;
           }
           .masonry-large, .masonry-medium, .masonry-small {
             grid-column: span 1;
+            grid-row: span 1;
           }
         }
 

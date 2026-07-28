@@ -113,7 +113,7 @@ export default function Footer() {
                 Mon - Fri: 9am - 6pm EST
               </span>
               <span style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-muted)', fontFamily: 'var(--font-sans)', fontWeight: '300' }}>
-                09070261007
+                08033699222
               </span>
             </div>
           </div>

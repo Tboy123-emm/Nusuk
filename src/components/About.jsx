@@ -89,22 +89,27 @@ export default function About() {
             <div 
               style={{ 
                 display: 'flex', 
-                gap: '4rem', 
+                flexWrap: 'wrap',
+                gap: '2.5rem', 
                 borderTop: '1px solid rgba(26, 26, 26, 0.08)', 
                 paddingTop: '2rem',
                 width: '100%' 
               }}
             >
               <div>
-                <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--gold)' }}>25+</span>
-                <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-muted)', marginTop: '4px' }}>Years of Care</span>
-              </div>
-              <div>
-                <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--gold)' }}>15k+</span>
-                <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-muted)', marginTop: '4px' }}>Blessed Pilgrims</span>
-              </div>
-              <div>
                 <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--gold)' }}>100%</span>
+                <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-muted)', marginTop: '4px' }}>Reliability</span>
+              </div>
+              <div>
+                <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--gold)' }}>5★</span>
+                <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-muted)', marginTop: '4px' }}>Comfort</span>
+              </div>
+              <div>
+                <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--gold)' }}>24/7</span>
+                <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-muted)', marginTop: '4px' }}>Friendly Support</span>
+              </div>
+              <div>
+                <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--gold)' }}>∞</span>
                 <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-muted)', marginTop: '4px' }}>Peace of Mind</span>
               </div>
             </div>

@@ -74,7 +74,7 @@ class PackagesPayload(BaseModel):
 
 class ContactFormData(BaseModel):
     name: str
-    email: str
+    email: str = 'noreply@nusuktours.com'
     phone: str
     journeyType: str
     message: str
@@ -289,18 +289,17 @@ async def reset_packages(payload: dict):
 
 def build_contact_email_body(contact_data: ContactFormData) -> str:
     return f"""
-New Contact Form Submission:
+New Inquiry - Nusuk Tours Website
 
 Name: {contact_data.name}
 Email: {contact_data.email}
 Phone: {contact_data.phone}
-Journey Type: {contact_data.journeyType}
+Journey / Package: {contact_data.journeyType}
 
-Message:
 {contact_data.message}
 
 ---
-This message was sent through the Nusuk Tours website contact form.
+Sent via Nusuk Tours website.
     """.strip()
 
 
@@ -409,12 +408,12 @@ async def send_contact(contact_data: ContactFormData):
 
         return {
             'status': 'queued',
-            'message': 'Contact form received. Please contact the advisor directly at reservation.nusuktours@gmail.com if the mail delivery is unavailable.'
+            'message': 'Contact form received. Please contact the advisor directly at reservation.nusuktours@gmail.com or call 08033699222 if mail delivery is unavailable.'
         }
     except Exception as e:
         return {
             'status': 'queued',
-            'message': f'Contact form received. Please contact the advisor directly at reservation.nusuktours@gmail.com. Error: {str(e)}'
+            'message': f'Contact form received. Please contact the advisor directly at reservation.nusuktours@gmail.com or call 08033699222. Error: {str(e)}'
         }
 
 
