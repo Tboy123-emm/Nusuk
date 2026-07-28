@@ -43,8 +43,7 @@ export default function About() {
           </div>
 
           {/* Right Side: Minimalist Editorial Text */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <span className="editorial-tag">The Nusuk Tours Promise</span>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
             
             <h2 
               className="section-title"
@@ -55,8 +54,7 @@ export default function About() {
                 fontWeight: '400'
               }}
             >
-              The Nusuk Tours Promise. <br />
-              <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>Peace of Mind.</span>
+              The Nusuk Tours Promise
             </h2>
 
             <p
