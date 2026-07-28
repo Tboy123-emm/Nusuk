@@ -11,7 +11,7 @@ export default function Gallery() {
       tag: 'Sacred Sanctuary',
       desc: 'The spiritual heart of Islam, housing the holy Kaaba. A place of endless circumambulation, profound unity, and light.',
       img: '/images/gallery_makkah.png',
-      gridClass: 'masonry-large',
+      gridClass: 'masonry-medium',
     },
     {
       id: 2,
@@ -308,19 +308,18 @@ export default function Gallery() {
           gap: 2rem;
           grid-template-areas:
             "makkah makkah madinah madinah"
-            "makkah makkah jeddah doha"
-            ". . dubai cairo";
+            "jeddah doha dubai cairo";
         }
         
         .masonry-item {
           border-radius: 0px;
         }
 
-        .masonry-large {
+        .masonry-item:nth-child(1) {
           grid-area: makkah;
         }
 
-        .masonry-medium {
+        .masonry-item:nth-child(2) {
           grid-area: madinah;
         }
 
