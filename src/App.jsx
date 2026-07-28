@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Navigation from './components/Navigation';
 import CinematicHero from './components/CinematicHero';
 import About from './components/About';
+import PlanCriteria from './components/PlanCriteria';
 import FeaturedPackages from './components/FeaturedPackages';
 import Gallery from './components/Gallery';
 import WhyChooseUs from './components/WhyChooseUs';
@@ -46,6 +47,9 @@ function App() {
 
       {/* Modern Split-Layout About Section */}
       <About />
+
+      {/* Plan Criteria & Benefits Section */}
+      <PlanCriteria />
 
       {/* Featured Curated Experience Cards */}
       <FeaturedPackages
