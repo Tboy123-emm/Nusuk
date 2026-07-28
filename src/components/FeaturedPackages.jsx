@@ -112,27 +112,18 @@ export default function FeaturedPackages({ onBookPackage }) {
               <h3 style={{ 
                 fontSize: '1.5rem', 
                 fontFamily: 'var(--font-serif)', 
-                margin: '1rem 0',
+                margin: '2rem 0',
                 color: 'var(--charcoal)'
               }}>
                 {tier.name}
               </h3>
-
-              <div style={{ 
-                fontSize: '2.5rem', 
-                fontWeight: '700', 
-                color: 'var(--gold)', 
-                margin: '1rem 0'
-              }}>
-                {tier.price}
-              </div>
 
               <p style={{ 
                 color: 'var(--text-muted)', 
                 fontSize: '0.9rem',
                 marginBottom: '1.5rem'
               }}>
-                Naira per guest
+                Premium travel package
               </p>
 
               <button

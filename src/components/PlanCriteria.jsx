@@ -51,7 +51,7 @@ export default function PlanCriteria() {
             Key Features
           </span>
           <h2 className="section-title" style={{ color: 'var(--charcoal)', fontWeight: '400', marginBottom: '1rem' }}>
-            Umrah Visa Benefits
+            Umrah Travel Criteria
           </h2>
           <p className="section-desc" style={{ maxWidth: '600px', margin: '0 auto' }}>
             From single entry to multi entry - comprehensive visa services designed for your spiritual journey
