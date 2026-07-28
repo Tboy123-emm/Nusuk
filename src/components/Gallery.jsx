@@ -43,7 +43,7 @@ export default function Gallery() {
       tag: 'Luxury Capital',
       desc: 'The pinnacle of modern luxury. From the Burj Khalifa to desert safaris, Dubai offers an unmatched blend of opulence and adventure.',
       img: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop',
-      gridClass: 'masonry-medium',
+      gridClass: 'masonry-small',
     },
     {
       id: 6,
