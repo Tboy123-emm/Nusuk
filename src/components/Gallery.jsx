@@ -306,6 +306,10 @@ export default function Gallery() {
           grid-template-columns: repeat(4, 1fr);
           grid-auto-rows: 250px;
           gap: 2rem;
+          grid-template-areas:
+            "makkah makkah madinah madinah"
+            "makkah makkah jeddah doha"
+            ". . dubai cairo";
         }
         
         .masonry-item {
@@ -313,18 +317,27 @@ export default function Gallery() {
         }
 
         .masonry-large {
-          grid-column: span 2;
-          grid-row: span 2;
+          grid-area: makkah;
         }
 
         .masonry-medium {
-          grid-column: span 2;
-          grid-row: span 1;
+          grid-area: madinah;
         }
 
-        .masonry-small {
-          grid-column: span 1;
-          grid-row: span 1;
+        .masonry-item:nth-child(3) {
+          grid-area: jeddah;
+        }
+
+        .masonry-item:nth-child(4) {
+          grid-area: doha;
+        }
+
+        .masonry-item:nth-child(5) {
+          grid-area: dubai;
+        }
+
+        .masonry-item:nth-child(6) {
+          grid-area: cairo;
         }
 
         @media (max-width: 1024px) {
