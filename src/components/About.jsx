@@ -106,10 +106,6 @@ export default function About() {
                 <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--gold)' }}>24/7</span>
                 <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-muted)', marginTop: '4px' }}>Friendly Support</span>
               </div>
-              <div>
-                <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: 'var(--gold)' }}>∞</span>
-                <span style={{ display: 'block', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-muted)', marginTop: '4px' }}>Peace of Mind</span>
-              </div>
             </div>
           </div>
         </div>
