@@ -138,7 +138,7 @@ export default function FeaturedPackages({ onBookPackage }) {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => onBookPackage({ planName: tier.name }, packages[0])}
+                onClick={() => onBookPackage(packages[0], tierPlan)}
                 style={{
                   width: '100%',
                   padding: '0.85rem',
