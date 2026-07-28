@@ -4,23 +4,23 @@ import { Landmark, Compass, Award, ShieldCheck, HeartHandshake } from 'lucide-re
 export default function WhyChooseUs() {
   const features = [
     {
-      title: 'Visa Assistance',
-      desc: 'VIP fast-track electronic visa processing, handled entirely by our internal governmental liaison team to secure seamless, priority approvals.',
+      title: 'Visa Processing',
+      desc: 'Visa Processing for: Umrah, Qatar Visit/Business/Medicals, UAE Visit/Business/Medicals, Egypt Visit/Business/Medicals.',
       icon: Landmark,
     },
     {
-      title: 'Flight Booking',
-      desc: 'Exclusive allocations on premier air carriers including Saudia, Emirates, and Qatar Airways, with priority lounge access and business class comfort.',
+      title: 'Flight Bookings',
+      desc: 'Flight Bookings with premium and reliable partner airlines: Saudia, Egypt Air, Ethiopian, Qatar Airways, Emirates.',
       icon: Compass,
     },
     {
       title: 'Hotel Reservations',
-      desc: 'Guaranteed reservations in premier five-star luxury suites directly facing the Holy courtyard, offering unparalleled views and immediate access.',
+      desc: 'Guaranteed comfortable and luxurious One-Five Star Hotel Reservations within Masjid Al-Haram (Makkah) and Masjid Al-Nabawi (Madina) vicinities, offering unparalleled views and access.',
       icon: Award,
     },
     {
-      title: 'Ground Transport',
-      desc: 'Private, air-conditioned GMC and luxury coach fleet transfers with experienced local chauffeurs, ensuring secure and seamless transits.',
+      title: 'Ground Transportation',
+      desc: 'Provision of standard package ground transportation services. We also offer, on request, Executive VIP Vehicles and Train Services to make you feel at home.',
       icon: ShieldCheck,
     },
     {
