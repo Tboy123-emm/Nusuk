@@ -24,28 +24,28 @@ export default function Services() {
     },
     {
       title: 'Visa Processing',
-      desc: 'Lightning-fast electronic visa clearances for Saudi Arabia, Dubai, Turkey, UK, and Schengen countries, managed by our legal specialists.',
+      desc: 'Visa Processing for: Umrah, Qatar Visit/Business/Medicals, UAE Visit/Business/Medicals, Egypt Visit/Business/Medicals.',
       icon: <FileCheck size={28} color="var(--gold-dark)" />,
     },
     {
-      title: 'Flight Booking',
-      desc: 'Premium charter bookings and priority reservations with world-class airlines. Upgrades to business/first class at exclusive lower rates.',
+      title: 'Flight Bookings',
+      desc: 'Flight Bookings with premium and reliable partner airlines: Saudia, Egypt Air, Ethiopian, Qatar Airways, Emirates.',
       icon: <Plane size={28} color="var(--gold-dark)" />,
     },
     {
       title: 'Hotel Reservations',
-      desc: 'Vetted list of five-star luxury suites facing the Kaaba in Makkah, and immediate walking distance to Al-Masjid an-Nabawi in Madinah.',
+      desc: 'Guaranteed comfortable and luxurious One-Five Star Hotel Reservations within Masjid Al-Haram (Makkah) and Masjid Al-Nabawi (Madina) vicinities, offering unparalleled views and access.',
       icon: <Building size={28} color="var(--gold-dark)" />,
+    },
+    {
+      title: 'Ground Transportation',
+      desc: 'Provision of standard package ground transportation services. We also offer, on request, Executive VIP Vehicles and Train Services to make you feel at home.',
+      icon: <Car size={28} color="var(--gold-dark)" />,
     },
     {
       title: 'Tour Packages',
       desc: 'Explore rich culture in Dubai, Turkey, Egypt, Jordan, and European landmarks with curated family and historical sightseeing itineraries.',
       icon: <MapPin size={28} color="var(--gold-dark)" />,
-    },
-    {
-      title: 'Airport Pickup',
-      desc: 'Chauffeured VIP airport greetings. Travel in absolute comfort with our private fleet of luxury GMCs, Lexuses, and executive coaches.',
-      icon: <Car size={28} color="var(--gold-dark)" />,
     },
     {
       title: 'Travel Consultation',

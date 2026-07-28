@@ -34,7 +34,7 @@ export default function Gallery() {
       title: 'Doha, Qatar',
       tag: 'Gulf Splendour',
       desc: 'A city where ancient heritage meets futuristic skyline. Explore the stunning Corniche, Museum of Islamic Art, and world-class hospitality.',
-      img: 'https://images.unsplash.com/photo-1590059913759-5460bd4b7049?q=80&w=800&auto=format&fit=crop',
+      img: 'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?q=80&w=800&auto=format&fit=crop',
       gridClass: 'masonry-small',
     },
     {
@@ -50,7 +50,7 @@ export default function Gallery() {
       title: 'Cairo, Egypt',
       tag: 'Ancient Wonders',
       desc: 'Walk in the footsteps of prophets and pharaohs. The Great Pyramids of Giza, Al-Azhar Mosque, and the timeless Nile await your arrival.',
-      img: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?q=80&w=800&auto=format&fit=crop',
+      img: 'https://images.unsplash.com/photo-1572252009286-268acec5ca0a?q=80&w=800&auto=format&fit=crop',
       gridClass: 'masonry-small',
     },
   ];

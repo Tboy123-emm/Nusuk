@@ -55,8 +55,8 @@ export default function About() {
                 fontWeight: '400'
               }}
             >
-              Spiritual Harmony. <br />
-              <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>Unrivaled Comfort.</span>
+              The Nusuk Tours Promise. <br />
+              <span style={{ fontStyle: 'italic', color: 'var(--gold)' }}>Peace of Mind.</span>
             </h2>
 
             <p
@@ -69,7 +69,7 @@ export default function About() {
                 marginBottom: '2rem',
               }}
             >
-              At Nusuk Tours, we believe that the sacred pilgrimages of Hajj and Umrah should be undertaken with complete peace of mind. We have spent over two decades curating high-end spiritual journeys, meticulously managing every logistical detail so that you can dedicate your heart entirely to worship.
+              At Nusuk Tours, we believe that the sacred Hajj Pilgrimage and Umra should be undertaken with complete peace of mind. That is why we dedicate our time in curating high-end spiritual journeys, meticulously managing every logistical detail so that you can also dedicate your heart entirely to worship.
             </p>
 
             <p
