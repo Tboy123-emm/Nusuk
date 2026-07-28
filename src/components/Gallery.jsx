@@ -11,7 +11,7 @@ export default function Gallery() {
       tag: 'Sacred Sanctuary',
       desc: 'The spiritual heart of Islam, housing the holy Kaaba. A place of endless circumambulation, profound unity, and light.',
       img: '/images/gallery_makkah.png',
-      gridClass: 'masonry-medium',
+      gridClass: 'masonry-large',
     },
     {
       id: 2,
@@ -19,7 +19,7 @@ export default function Gallery() {
       tag: 'Prophetic Serenity',
       desc: 'The peaceful City of the Prophet. Home to Al-Masjid an-Nabawi, marked by its iconic Green Dome and giant folding white umbrellas.',
       img: '/images/gallery_madinah.png',
-      gridClass: 'masonry-medium',
+      gridClass: 'masonry-large',
     },
     {
       id: 3,
@@ -307,6 +307,7 @@ export default function Gallery() {
           grid-auto-rows: 250px;
           gap: 2rem;
           grid-template-areas:
+            "makkah makkah madinah madinah"
             "makkah makkah madinah madinah"
             "jeddah doha dubai cairo";
         }
