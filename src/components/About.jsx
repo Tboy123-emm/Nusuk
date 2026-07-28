@@ -43,7 +43,7 @@ export default function About() {
           </div>
 
           {/* Right Side: Minimalist Editorial Text */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             
             <h2 
               className="section-title"
